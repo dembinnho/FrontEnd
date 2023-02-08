@@ -6,7 +6,7 @@ This repo contains a flutter front web app, it has secure-web-dev as backend
 
 1. Install flutter on your machine
 2. Install Google Chrome if it's not already in your machine
-3. Launch the secure web dev backend that you can use here: add github link
+3. Launch the secure web dev backend that you can use here: https://github.com/dembinnho/secure-web-dev-backend
 4. Follow these instructions to enable flutter to connect to the localhost backend: 
         1- Go to flutter\bin\cache and remove a file named: flutter_tools.stamp
         2- Go to flutter\packages\flutter_tools\lib\src\web and open the file chrome.dart.
