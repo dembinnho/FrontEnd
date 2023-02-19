@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location_front/widgets/gallery_widget.dart';
@@ -16,7 +15,7 @@ import 'package:path/path.dart' as Path;
 /// * Upload/delete image to/from Firebase Storage.
 class ImageHandler {
   /// Firebase Storage reference.
-  late final Reference storageRef;
+ // late final Reference storageRef;
 
   /// Path to a default image to use if no other image is found.
   final String? defaultImagePath;
@@ -70,9 +69,7 @@ class ImageHandler {
     );
   }
 
-  Future<String> getImageUrl(File file) {
-    return storageRef.child(file.path).getDownloadURL();
-  }
+
 
   /// Gets an image widget from [url].
   /// Use cache to improve performance.
@@ -252,12 +249,10 @@ class ImageHandler {
     final String time = DateTime.now().millisecondsSinceEpoch.toString();
     final String extension = Path.extension(file.path);
     final String name = time + extension;
-    final Reference ref = storageRef.child(name);
-    final UploadTask uploadTask = ref.putFile(file);
+    //final Reference ref = storageRef.child(name);
+   // final UploadTask uploadTask = ref.putFile(file);
 
     try {
-      final res = await uploadTask;
-      url = await res.ref.getDownloadURL();
     } catch (error) {
       print(error);
     }
