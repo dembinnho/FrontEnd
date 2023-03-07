@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String token = '';
+  String snackBarMessage = '';
   final _formKey = GlobalKey<FormState>();
 
   final _userNameTextController = TextEditingController();
@@ -24,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final _focusPassword = FocusNode();
 
-  final bool _isProcessing = false;
+   bool _isProcessing = false;
   bool valueFirst = false;
 
   void clearForm() {
@@ -56,9 +57,14 @@ class _LoginPageState extends State<LoginPage> {
               "password": password,
             }));
 
+
     if (response.statusCode == 200) {
+      snackBarMessage = 'Welcome !';
       token = jsonDecode(response.body)["jwt"];
       return true;
+    }
+    if(response.statusCode == 401) {
+      snackBarMessage = 'Credentials are not valid';
     }
     return false;
   }
@@ -216,27 +222,42 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: () async {
                               if (_userNameTextController.text.isEmpty) {
-                                SnackBar snackBar = const SnackBar(content: Text("Username is blank please fill in"));
-
+                                snackBarMessage = "Username is blank please fill in";
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                               }
                               if (_passwordTextController.text.isEmpty) {
-                                SnackBar snackBar = const SnackBar(content: Text("Password is blank please fill in"));
+                                snackBarMessage = "Password is blank please fill in";
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
 
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                               }
+                              setState(() {
+                                _isProcessing = true;
+                              });
                               if (await logIn(
                                 password: _passwordTextController.text,
                                 userName: _userNameTextController.text,
                               )) {
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+                                SnackBar snackBar =  SnackBar(
+                                    content: Text(
+                                        snackBarMessage));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => HomePage(isConnected: true, token: token, )));
                               } else {
-                                SnackBar snackBar = const SnackBar(
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+                                SnackBar snackBar =  SnackBar(
                                     content: Text(
-                                        "Erreur lors de l'authentification"));
+                                        snackBarMessage));
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               }
@@ -250,6 +271,9 @@ class _LoginPageState extends State<LoginPage> {
                             )),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.2,
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         _isProcessing
                             ? const CircularProgressIndicator()

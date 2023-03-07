@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:location_front/models/location.dart';
 import 'package:location_front/search_field.dart';
+import 'package:location_front/ui/add_location_page.dart';
 import 'package:location_front/ui/login_page.dart';
 import 'package:location_front/ui/sign_up_page.dart';
 import 'package:location_front/utils/image_handler.dart';
@@ -263,6 +264,20 @@ class _LocationPageState extends State<LocationPage> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.01,
                       ),
+                      //if (admin)
+                    /*  TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>  AddLocationPage(token: widget.token)));
+                        },
+                        child: const Text(
+                          'Add Location',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 26,
+                              decoration: TextDecoration.underline),
+                        ),
+                      ), */
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.01,
                       ),
@@ -278,8 +293,10 @@ class _LocationPageState extends State<LocationPage> {
           widget.isConnected ?
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const Text("Click on any location tile to obtain details"),
+                const SizedBox(height: 20,),
                 SizedBox(
                   height: 200,
                   child: FutureBuilder<List<dynamic>>(
@@ -295,7 +312,7 @@ class _LocationPageState extends State<LocationPage> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Scrollbar(
-                          controller: ScrollController(),
+                          controller: ScrollController(initialScrollOffset: 0),
                           child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
@@ -306,7 +323,7 @@ class _LocationPageState extends State<LocationPage> {
                                 Location location = Location.fromJson(loc);
                                 return LocationTile(location: location,);
                               }
-                              return const Text("");
+                              return CircularProgressIndicator();
                             },
                           ),
                         ),

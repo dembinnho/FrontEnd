@@ -14,6 +14,8 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  String snackBarMessage = '';
+  bool _isProcessing = false;
 
   Future<bool> signIn({
     required String userName,
@@ -30,15 +32,17 @@ class _SignUpPageState extends State<SignUpPage> {
               "password": password,
               "role": role
             }));
-
-    if (response.statusCode == 200) {
+    print(response.statusCode);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      snackBarMessage = "Successfully signed in, register now !";
       //return Location.fromJson(jsonDecode(response.body));
       return true;
     }
-    if (response.body != "Something broke!") {
-      return true;
+    else {
+      snackBarMessage = response.body;
+      return false;
+
     }
-    return false;
   }
 
   String serverResponse = 'Server response';
@@ -50,7 +54,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final _focusRole = FocusNode();
   final _focusPassword = FocusNode();
 
-  final bool _isProcessing = false;
   bool valueFirst = false;
 
   void clearForm() {
@@ -293,34 +296,47 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             onPressed: () async {
                               if (_userNameTextController.text.isEmpty) {
-                                SnackBar snackBar = const SnackBar(content: Text("Username is blank please fill in"));
+                                snackBarMessage = "Username is blank please fill in";
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
 
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                               }
                               if (_passwordTextController.text.isEmpty) {
-                                SnackBar snackBar = const SnackBar(content: Text("Password is blank please fill in"));
+                                snackBarMessage = "Password is blank please fill in";
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
 
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                               }
                               if (_roleController.text.isEmpty) {
-                                SnackBar snackBar = const SnackBar(content: Text("Role is blank please fill in"));
+                                snackBarMessage = "Role is blank please fill in";
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                               }
+                              setState(() {
+                                _isProcessing = true;
+                              });
                               if (await signIn(
                                 password: _passwordTextController.text,
                                 userName: _userNameTextController.text,
                                 role: _roleController.text
                               )) {
-                                SnackBar snackBar = const SnackBar(content: Text("Inscription reussie, connectez vous !"));
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
+
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => const LoginPage()));
                               }
                               else {
-                                SnackBar snackBar = const SnackBar(content: Text("Cet utilisateur ne peut pas etre inscrit"));
+                                setState(() {
+                                  _isProcessing = false;
+                                });
+                                SnackBar snackBar =  SnackBar(content: Text(snackBarMessage));
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               }
                             },
@@ -333,6 +349,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             )),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.2,
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         _isProcessing
                             ? const CircularProgressIndicator()

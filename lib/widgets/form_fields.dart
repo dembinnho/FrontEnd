@@ -159,7 +159,7 @@ class EmailFormField extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.circular(5.5),
           ),
-          hintText: "userName",
+          hintText: "username",
           hintStyle: const TextStyle(color: Colors.grey),
         ),
         controller: _emailTextController,

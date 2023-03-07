@@ -1,24 +1,41 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:location_front/models/location.dart';
 import 'package:location_front/search_field.dart';
-import 'package:location_front/ui/location_page.dart';
 import 'package:location_front/ui/login_page.dart';
 import 'package:location_front/ui/sign_up_page.dart';
 import 'package:location_front/utils/image_handler.dart';
+import 'package:http/http.dart' as http;
 
-import '../widgets/movie_tile.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key? key, this.isConnected = false, required this.token}) : super(key: key);
+class AddLocationPage extends StatefulWidget {
+  AddLocationPage({Key? key, required this.token}) : super(key: key);
   final ImageHandler imageHandler = ImageHandler();
-  final bool isConnected;
   final String token;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AddLocationPage> createState() => _AddLocationPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AddLocationPageState extends State<AddLocationPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  Future<List<dynamic>> getLocation() async {
+    //get Url
+    List<dynamic> locations = [];
+    var response = await http.get(
+      Uri.parse('https://secure-web-dev-backend-lwkp.onrender.com/locations?offset=0&limit=100'),
+      headers: {
+        'Authorization':
+            'Bearer ${widget.token}'
+      },
+    );
+    locations = jsonDecode(response.body);
+    return locations;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +127,6 @@ class _HomePageState extends State<HomePage> {
                                 )),
                           ],
                         ),
-
                       ],
                     ),
                   ),
@@ -137,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                   TextButton(
                     onPressed: () {},
                     child: const Text(
-                      'Discover all locations and more',
+                      'Add Locations',
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -147,121 +163,32 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.1,
                   ),
-                  Row(
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
-
-                          /// TODO loginpage
-                        },
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 26,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.01,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const SignUpPage()));
-                        },
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 26,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.01,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          if (widget.isConnected) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    LocationPage(isConnected: widget.isConnected, token: widget.token,)));
-                          }
-                          else {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    const LoginPage()));
-                          }
-                          // todo locationPage
-                        },
-                        child: const Text(
-                          'Locations',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 26,
-                              decoration: TextDecoration.underline),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.01,
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ],
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.width * 0.03,
+            height: MediaQuery.of(context).size.height * 0.2,
           ),
           Center(
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.95,
-              height: MediaQuery.of(context).size.height * 0.1,
-              color: const Color.fromRGBO(101, 190, 195, 1), // 101, 190, 195
-              child: Row(),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
-          ),
-           Padding(
-            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Click on locations if you wish to see locations', style: TextStyle(fontWeight: FontWeight.bold),),
-                SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.01,
-                ),
-                const Text('Investors:'),
+                const Text("Add location to database"),
+                const SizedBox(height: 20,),
+                Form(
+                 key: _formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  PresentationTile(
-                    title: 'ESILV',
-                    picture: 'esilv.jpeg',
-                  ),
-                  PresentationTile(
-                    title: 'Pole LDV',
-                    picture: 'pole.png',
-                  ),
-                  PresentationTile(
-                    title: 'Express Batiment',
-                    picture: 'express.jpeg',
-                  ),
-                ]),
-          ),
+          )
         ],
       ),
     ));
