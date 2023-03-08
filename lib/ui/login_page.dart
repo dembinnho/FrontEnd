@@ -144,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 55,
 
                         ),
+                        Image.asset('esilv.jpeg'),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.01,
                         ),

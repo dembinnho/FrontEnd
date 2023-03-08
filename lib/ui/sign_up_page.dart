@@ -214,6 +214,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.02,
                         ),
+                        Image.asset('esilv.jpeg', width: 55,),
+
                         Image.network(
                           'https://www.mondedesgrandesecoles.fr/wp-content/uploads/1-206.jpg',
                           width: 100,
