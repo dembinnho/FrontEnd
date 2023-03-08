@@ -168,15 +168,15 @@ class _HomePageState extends State<HomePage> {
                 children: const [
                   PresentationTile(
                     title: 'ESILV',
-                    picture: 'https://www.esilv.fr/ecole-ingenieur/wp-content/uploads/2020/09/logo-esilv-b-150.png',
+                    picture: 'assets/esilv.jpeg',
                   ),
                   PresentationTile(
                     title: 'Pole LDV',
-                    picture: 'https://www.mondedesgrandesecoles.fr/wp-content/uploads/1-206.jpg',
+                    picture: 'assets/pole.png',
                   ),
                   PresentationTile(
                     title: 'Express Batiment',
-                    picture: 'https://www.keejob.com/media/recruiter/recruiter_18502/logo-18502-20220319-110717.jpeg',
+                    picture: 'assets/express.jpeg',
                   ),
                 ]),
           ),

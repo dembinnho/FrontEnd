@@ -207,18 +207,16 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding: const EdgeInsets.all(35),
                     child: Row(
                       children: [
-                        Image.network(
-                          'https://www.esilv.fr/ecole-ingenieur/wp-content/uploads/2020/09/logo-esilv-b-150.png',
-                          width: 100,
+                        Image.asset(
+                          'assets/esilv.jpeg',
+                          width: 55,
                         ),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.02,
+                          width: MediaQuery.of(context).size.width * 0.01,
                         ),
-                        Image.asset('assets/esilv.jpeg', width: 55,),
-
-                        Image.network(
-                          'https://www.mondedesgrandesecoles.fr/wp-content/uploads/1-206.jpg',
-                          width: 100,
+                        Image.asset(
+                          'assets/pole.png',
+                          width: 55,
                         ),
                       ],
                     ),

@@ -12,7 +12,7 @@ class PresentationTile extends StatelessWidget {
           onTap: () {
           },
           child: SizedBox(
-              height: 216, width: 361, child: Image.network(picture)),
+              height: 216, width: 361, child: Image.asset(picture)),
         ),
         Text(
           title,
