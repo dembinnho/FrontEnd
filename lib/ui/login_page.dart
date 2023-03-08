@@ -139,16 +139,13 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.all(35),
                     child: Row(
                       children: [
-                        Image.asset(
-                          'esilv.jpeg',
+                        Image.network(
+                          'https://www.esilv.fr/ecole-ingenieur/wp-content/uploads/2020/09/logo-esilv-b-150.png',
                           width: 55,
+
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.01,
-                        ),
-                        Image.asset(
-                          'pole.png',
-                          width: 55,
                         ),
                       ],
                     ),
@@ -272,7 +269,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.2,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         _isProcessing

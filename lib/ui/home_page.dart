@@ -34,88 +34,6 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.01,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Locations',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 200.0),
-                    child: SearchField(),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                  ),
-                  SvgPicture.asset(
-                    'question_mark.svg',
-                    width: 45,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text(
-                              'Register: ',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignUpPage()));
-                                },
-                                child: const Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 10),
-                                ))
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              'Already have an account?',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => const LoginPage()));
-                                },
-                                child: const Text(
-                                  'Log in',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 10),
-                                )),
-                          ],
-                        ),
-
-                      ],
-                    ),
-                  ),
-                ],
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
@@ -250,15 +168,15 @@ class _HomePageState extends State<HomePage> {
                 children: const [
                   PresentationTile(
                     title: 'ESILV',
-                    picture: 'esilv.jpeg',
+                    picture: 'https://www.esilv.fr/ecole-ingenieur/wp-content/uploads/2020/09/logo-esilv-b-150.png',
                   ),
                   PresentationTile(
                     title: 'Pole LDV',
-                    picture: 'pole.png',
+                    picture: 'https://www.mondedesgrandesecoles.fr/wp-content/uploads/1-206.jpg',
                   ),
                   PresentationTile(
                     title: 'Express Batiment',
-                    picture: 'express.jpeg',
+                    picture: 'https://www.keejob.com/media/recruiter/recruiter_18502/logo-18502-20220319-110717.jpeg',
                   ),
                 ]),
           ),
