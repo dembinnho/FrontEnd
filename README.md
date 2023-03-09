@@ -1,22 +1,30 @@
 # location_front
 
-This repo contains a flutter front web app, it has secure-web-dev as backend
+This repo contains a flutter front web app, it has node express backend which is already deployed at this url:
+https://secure-web-dev-backend-lwkp.onrender.com/
 
-## 👷 Prerequisites
+You can download the backend server and run it locally through this link:
+https://github.com/dembinnho/secure-web-dev-backend
 
-1. Install flutter on your machine
+## 👷 Prerequisites to run the project locally
+
+1. Install flutter on your machine: https://docs.flutter.dev/get-started/install
+
 2. Install Google Chrome if it's not already in your machine
-3. Launch the secure web dev backend that you can use here: https://github.com/dembinnho/secure-web-dev-backend
-4. Follow these instructions to enable flutter to connect to the localhost backend: 
-        1- Go to flutter\bin\cache and remove a file named: flutter_tools.stamp
-        2- Go to flutter\packages\flutter_tools\lib\src\web and open the file chrome.dart.
-        3- Find '--disable-extensions'
-        4- Add '--disable-web-security'
 
-5. run "flutter run ." and select chrome as environment to run the app
+## Run locally
+
+1. Launch the secure web dev backend viia this url: https://secure-web-dev-backend-lwkp.onrender.com/
+2. run "flutter run ." and select chrome as environment to run the app
+3. Enjoy it in fullscreen !
+
+## Run without installing
+
+1. Launch the secure web dev backend via this url: https://secure-web-dev-backend-lwkp.onrender.com/
+2. Lauch the app via this url: https://front-end-mocha-omega.vercel.app/
+3. Enjoy it in fullscreen !
 
 ## Quick information
-
 This project is a front application linked to a node/express backend.
 It is meant to run on Chrome, however you can launch it on an Android or IOS device (will not run correctly).
 
