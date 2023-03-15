@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
     required String role,
   }) async {
     var response =
-        await http.post(Uri.parse('https://secure-web-dev-backend-lwkp.onrender.com/users/register'),
+        await http.post(Uri.parse('http://localhost:3000/users/register'),
             headers: <String, String>{
               'Content-Type': 'application/json',
             },

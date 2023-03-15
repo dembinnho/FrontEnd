@@ -26,7 +26,7 @@ class _AddLocationPageState extends State<AddLocationPage> {
     //get Url
     List<dynamic> locations = [];
     var response = await http.get(
-      Uri.parse('https://secure-web-dev-backend-lwkp.onrender.com/locations?offset=0&limit=100'),
+      Uri.parse('http://localhost:3000/locations?offset=0&limit=100'),
       headers: {
         'Authorization':
             'Bearer ${widget.token}'

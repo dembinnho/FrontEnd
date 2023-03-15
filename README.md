@@ -1,7 +1,7 @@
 # location_front
 
 This repo contains a flutter front web app, it has node express backend which is already deployed at this url:
-https://secure-web-dev-backend-lwkp.onrender.com/
+172.22.0.3/16/
 
 You can download the backend server and run it locally through this link:
 https://github.com/dembinnho/secure-web-dev-backend
@@ -14,13 +14,13 @@ https://github.com/dembinnho/secure-web-dev-backend
 
 ## Run locally
 
-1. Launch the secure web dev backend viia this url: https://secure-web-dev-backend-lwkp.onrender.com/
+1. Launch the secure web dev backend viia this url: 172.22.0.3/16/
 2. run "flutter run ." and select chrome as environment to run the app
 3. Enjoy it in fullscreen !
 
 ## Run without installing
 
-1. Launch the secure web dev backend via this url: https://secure-web-dev-backend-lwkp.onrender.com/
+1. Launch the secure web dev backend via this url: 172.22.0.3/16/
 2. Lauch the app via this url: https://front-end-mocha-omega.vercel.app/
 3. Enjoy it in fullscreen !
 

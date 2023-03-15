@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:location_front/models/location.dart';
 import 'package:location_front/search_field.dart';
 import 'package:location_front/ui/add_location_page.dart';
 import 'package:location_front/ui/login_page.dart';
 import 'package:location_front/ui/sign_up_page.dart';
+import 'package:location_front/utils/get_locations_body.dart';
 import 'package:location_front/utils/image_handler.dart';
 import 'package:http/http.dart' as http;
 
@@ -88,22 +90,26 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
+   int lengthBody = 0;
+   late List<dynamic> locationsToShare;
+
   Future<List<dynamic>> getLocation() async {
-    //get Url
-    List<dynamic> locations = [];
-    var response = await http.get(
-      Uri.parse('https://secure-web-dev-backend-lwkp.onrender.com/locations?offset=0&limit=100'),
-      headers: {
-        'Authorization':
-            'Bearer ${widget.token}'
-      },
-    );
-    locations = jsonDecode(response.body);
-    return locations;
+    rootBundle.clear();
+    imageCache.clear();
+    rootBundle.evict('assets/locations_movie.json');
+
+    List<dynamic> body = await getLocationBody();
+    lengthBody = body.length;
+    return body;
+  }
+  void initLocations() async {
+    locationsToShare = await getLocation();
+    lengthBody = locationsToShare.length;
   }
 
   @override
   Widget build(BuildContext context) {
+     initLocations();
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(
@@ -214,6 +220,7 @@ class _LocationPageState extends State<LocationPage> {
                       if (snapshot.data?.length == 0) {
                         return const Text("no data", style: TextStyle(color: Colors.black),);
                       }
+                      int lengthView = snapshot.data?.length ?? 0;
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Scrollbar(
@@ -221,7 +228,7 @@ class _LocationPageState extends State<LocationPage> {
                           child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
-                            itemCount: 100,
+                            itemCount: lengthView,
                             itemBuilder: (context, index) {
                               var loc = snapshot.data?[index];
                               if (snapshot.data?[index] != null) {
