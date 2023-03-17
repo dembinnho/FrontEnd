@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+  database:
+    image: mongo:latest
+    volumes:
+      - myvolume:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME:admin
+      - MONGO_INITDB_ROOT_PASSWORD:admin311
+      - MONGO_URI:mongodb+srv://admin:admin311@cluster0.xifjfyo.mongodb.net/?retryWrites=true&w=majority
+    networks:
+      - mon_reseau
+  front:
+    build:
+      context: /Users/demba_sabaly/Desktop/esilv/webApplications/tdFrontEnd/LocationFrontWebApp
+      dockerfile: Dockerfile
+    image: docker.io/dembi311/cloud_web_app_front_app:latest
+    volumes:
+      - /Users/demba_sabaly/Desktop/esilv/webApplications/tdFrontEnd/LocationFrontWebApp/assets/locations_movie.json:/./assets/locations_movie.json
+    ports:
+      - "8080:80"
+    depends_on:
+      - back
+    networks:
+      - mon_reseau
+  back:
+    build:
+      context: /Users/demba_sabaly/Desktop/esilv/webApplications/tdFrontEnd/secure-web-dev-backend
+      dockerfile: Dockerfile
+    image: docker.io/dembi311/cloud_web_app_back_app:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - mon_reseau
+volumes:
+  myvolume:
+networks:
+  mon_reseau:
+    driver: bridge
